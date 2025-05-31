@@ -55,10 +55,18 @@ public class DemoDatenImporter implements ApplicationRunner {
         
         AngestellterNode manager1 = erzeugeAngestellter( "Manfred", "Meier", gruender, null );
         AngestellterNode manager2 = erzeugeAngestellter( "Melanie", "Meyer", gruender, null );
-                
+                        
+        AngestellterNode ma1 = erzeugeAngestellter( "Alred" , "Armbruster", manager1, null );
+        AngestellterNode ma2 = erzeugeAngestellter( "Bob"   , "Brecht"    , manager1, null );
+        AngestellterNode ma3 = erzeugeAngestellter( "Claire", "Cramer"    , manager1, null );
+        
         final long anzahlAngestellteNachher = _angestellterRepo.count();
         LOG.info( "Anzahl Angestellte in Datenbank nach Import Demo-Daten: {}", 
                   anzahlAngestellteNachher );
+        
+        final long anzahlIstUnterstelltBeziehungen = _angestellterRepo.countIstUnterstelltRelationships();
+        LOG.info( "Anzahl Beziehungen >ist unterstellt< in Datenbank nach Import Demo-Daten: {}", 
+                  anzahlIstUnterstelltBeziehungen );        
     }
     
     
