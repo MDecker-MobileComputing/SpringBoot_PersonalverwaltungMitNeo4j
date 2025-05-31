@@ -24,11 +24,9 @@ public class AngestellterNode {
     private String _nachname;
 
     @Relationship(type = "IST_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
-    @Property("unterstelltAktuell")
     private Set<AngestellterNode> _unterstelltAktuell = new HashSet<>();
 
     @Relationship(type = "WAR_MAL_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
-    @Property("unterstelltVergangenheit")
     private Set<AngestellterNode> _unterstelltEhemalig = new HashSet<>();
 
     public AngestellterNode() {}
