@@ -83,17 +83,17 @@ public class DemoDatenImporter implements ApplicationRunner {
         
         if ( vorgesetzterAktuell != null ) {
             
-            angesteller.addAktuellUnterstellt( vorgesetzterAktuell );
+            angesteller.setVorgesetzter( vorgesetzterAktuell );
         }
         
+        /*
         if ( vorgesetzterEhemals != null ) {
             
             angesteller.addEhemaligUnterstellt( vorgesetzterEhemals );
         }
+        */
         
-        _angestellterRepo.save( angesteller );
-        
-        return angesteller;
+        return _angestellterRepo.save( angesteller );
     }
 
 }

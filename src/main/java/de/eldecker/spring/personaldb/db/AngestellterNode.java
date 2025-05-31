@@ -1,5 +1,6 @@
 package de.eldecker.spring.personaldb.db;
 
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
@@ -13,88 +14,95 @@ import java.util.Set;
 @Node("Angestellter")
 public class AngestellterNode {
 
-    @Id
-    @Property("id")
-    private Long _id;
+    @Id @GeneratedValue
+    private Long id;
 
-    @Property("vorname")
-    private String _vorname;
+    private String vorname;
     
-    @Property("nachname")
-    private String _nachname;
+    private String nachname;
 
     @Relationship(type = "IST_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
-    private Set<AngestellterNode> _unterstelltAktuell = new HashSet<>();
+    private AngestellterNode vorgesetzter = null;
 
+    /*
     @Relationship(type = "WAR_MAL_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
-    private Set<AngestellterNode> _unterstelltEhemalig = new HashSet<>();
+    private Set<AngestellterNode> unterstelltEhemalig = new HashSet<>();
+    */
 
     public AngestellterNode() {}
 
     public AngestellterNode( String vorname, String nachname ) {
         
-        _vorname  = vorname;
-        _nachname = nachname;
+        this.vorname  = vorname;
+        this.nachname = nachname;
     }
 
     public Long getId() { 
         
-        return _id; 
+        return id; 
     }
     
     public void setId( Long id ) { 
         
-        _id = id; 
+        this.id = id; 
     }
 
     public String getVorname() { 
         
-        return _vorname; 
+        return this.vorname; 
     }
     
     public void setVorname( String vorname ) { 
         
-        _vorname = vorname; 
+        this.vorname = vorname; 
     }
 
     public String getNachname() { 
         
-        return _nachname; 
+        return this.nachname; 
     }
     
     public void setNachname( String nachname ) { 
         
-        _nachname = nachname; 
+        this.nachname = nachname; 
     }
 
-    public Set<AngestellterNode> getAktuelleUnterstellte() { 
+    
+    public String getVollerName() {
         
-        return _unterstelltAktuell; 
+        return vorname + " " + nachname;
     }
     
-    public void setAktuelleUnterstellte( Set<AngestellterNode> aktuelleUnterstellte ) { 
+    
+    public void setVorgesetzter( AngestellterNode vorgesetzter ) {
         
-        _unterstelltAktuell = aktuelleUnterstellte; 
+        this.vorgesetzter = vorgesetzter;
+    }
+    
+
+    public AngestellterNode getVorgesetzter() {
+        
+        return this.vorgesetzter;
     }
 
-    public void addAktuellUnterstellt( AngestellterNode aktuellUnterstellt ) {
-        
-        _unterstelltAktuell.add( aktuellUnterstellt );
-    }
     
-    public Set<AngestellterNode> getEhemaligeUnterstellte() { 
+    @Override
+    public String toString() {
         
-        return _unterstelltEhemalig; 
-    }
-    
-    public void addEhemaligUnterstellt( AngestellterNode ehemaligUnterstellt ) {
+        StringBuffer sb = new StringBuffer();
         
-        _unterstelltEhemalig.add( ehemaligUnterstellt );
-    }
-    
-    public void setEhemaligeUnterstellte( Set<AngestellterNode> ehemaligeUnterstellte ) { 
+        sb.append( vorname  ).append( ' ' ).append( nachname ).append( ": " );
         
-        _unterstelltEhemalig = ehemaligeUnterstellte; 
+        if ( vorgesetzter != null ) {
+            
+            sb.append( "Direkter Vorgesetzter ist " ).append( vorgesetzter.getVollerName() );            
+            
+        } else {
+            
+            sb.append( "Niemanden unterstellt" );
+        }
+        
+        
+        return sb.toString();
     }
-    
 }
