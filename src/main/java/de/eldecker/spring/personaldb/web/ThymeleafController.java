@@ -74,8 +74,7 @@ public class ThymeleafController {
     @GetMapping( "/person/{id}" )
     public String person( @PathVariable Long id, Model model ) {
         
-        final Optional<AngestelltePersonNode> personOptional = _angestellterNodeRepository.findById( id );
-        
+        final Optional<AngestelltePersonNode> personOptional = _angestellterNodeRepository.findById( id );        
         if ( personOptional.isEmpty() ) {
 
             final String fehlerText = String.format( "Keine Person mit ID=%d in Datenbank gefunden.", id );            
@@ -85,10 +84,13 @@ public class ThymeleafController {
             return "fehler";
         }
         
-        LOG.warn( "Details abgerufen fuer: {}", personOptional.get() ); 
-        
+        LOG.warn( "Details abgerufen fuer: {}", personOptional.get() );         
         model.addAttribute( "person", personOptional.get() );
-
+        
+        final List<AngestelltePersonNode> listeDerVorgesetzten = _angestellterNodeRepository.getVorgesetztenKette( id );
+        LOG.info( "Liste der Vorgesetzten: {}", listeDerVorgesetzten );
+        //model.addAttribute( "listeDerVorgesetzten", listeDerVorgesetzten );
+        
         return "person-details";
     }
 

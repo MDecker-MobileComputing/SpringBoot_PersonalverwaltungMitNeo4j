@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.data.repository.query.Param;
 
 
 /**
@@ -32,5 +33,24 @@ public interface AngestelltenRepo
      */
     List<AngestelltePersonNode> findAllByOrderByNachnameAscVornameAsc();
 
+    
+    /**
+     * Findet alle direkten und indirekten Vorgesetzten für eine gegebene Person anhand ihrer ID.
+     * Die Methode durchläuft die Hierarchie der "IST_UNTERSTELLT"-Beziehungen.
+     *
+     * @param id Die ID der {@code AngestelltePersonNode}, für die die Vorgesetzten gefunden werden sollen.
+     * 
+     * @return Eine Liste aller direkten und indirekten {@code AngestelltePersonNode}-Objekte,
+     *         die Vorgesetzte der Person mit der gegebenen ID sind. Gibt eine leere Liste zurück,
+     *         wenn keine Vorgesetzten gefunden werden oder die Person nicht existiert.
+     */
+    @Query("""
+            MATCH path = (person:AngestelltePerson)-[:IST_UNTERSTELLT*]->(supervisor:AngestelltePerson)
+            WHERE person.id = $id
+            RETURN nodes(path) AS supervisorChain
+            ORDER BY length(path) DESC
+            LIMIT 1
+        """)
+    List<AngestelltePersonNode> getVorgesetztenKette( Long id );
+
 }
- 
