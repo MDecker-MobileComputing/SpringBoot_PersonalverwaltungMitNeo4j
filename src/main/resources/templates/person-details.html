@@ -35,11 +35,11 @@
     <p>
         <span class="fett">Vorgesetzte:</span>
         &nbsp;
-        <span th:each="vorgesetzter : ${listeDerVorgesetzten}">
+        <span th:each="vorgesetzter, iterStat : ${listeDerVorgesetzten}">
             <a th:href="@{/app/person/{id}(id=${vorgesetzter.id})}">
                 <span th:text="${vorgesetzter.getVollerName()}"></span>
             </a>
-            &nbsp;
+            <span th:if="${!iterStat.last}">&nbsp; → &nbsp;</span>
         </span>    
     </p>
     
