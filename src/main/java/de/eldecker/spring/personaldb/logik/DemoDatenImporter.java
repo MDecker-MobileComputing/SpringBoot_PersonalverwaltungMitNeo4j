@@ -44,7 +44,8 @@ public class DemoDatenImporter implements ApplicationRunner {
         
         if ( anzahlAngestellteVorher > 0) {
          
-            LOG.info( "Datenbank enthält schon {} Personen, es werden keine Demo-Daten importiert." );
+            LOG.info( "Datenbank enthält schon {} Personen, es werden keine Demo-Daten importiert.", 
+                      anzahlAngestellteVorher );
             return;
         }
            
@@ -58,9 +59,8 @@ public class DemoDatenImporter implements ApplicationRunner {
                         
         erzeugeAngestellter( "Alfred" , "Armbruster", manager1, null );
         erzeugeAngestellter( "Bob"    , "Brecht"    , manager1, null );
-        erzeugeAngestellter( "Claire" , "Cramer"    , manager1, null );
-        
-        erzeugeAngestellter( "Dave" , "Dolllinger"  , manager2, null );
+        erzeugeAngestellter( "Claire" , "Cramer"    , manager1, null );        
+        erzeugeAngestellter( "Dave"   , "Dolllinger", manager2, null );
         
         AngestelltePersonNode edwin = erzeugeAngestellter( "Edwin", "Eger", manager2, null );
         

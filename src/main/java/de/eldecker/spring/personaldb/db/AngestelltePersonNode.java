@@ -114,17 +114,15 @@ public class AngestelltePersonNode {
         
         StringBuffer sb = new StringBuffer();
         
-        sb.append( vorname  ).append( ' ' ).append( nachname ).append( ": " );
+        sb.append( vorname  ).append( ' ' ).append( nachname ).append( " hat als direkten Vorgesetzten " );
         
         if ( vorgesetzter != null ) {
             
-            final String vorgesetzterName = vorgesetzter.getVollerName();
-
-            sb.append( "Direkter Vorgesetzter ist " ).append( vorgesetzterName );
+            sb.append( vorgesetzter.getVollerName() );
             
         } else {
             
-            sb.append( "Niemanden unterstellt" );
+            sb.append( "niemanden." );
         }
         
         return sb.toString();

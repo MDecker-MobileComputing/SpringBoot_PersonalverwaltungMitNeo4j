@@ -2,6 +2,7 @@ package de.eldecker.spring.personaldb.db;
 
 import java.util.List;
 
+
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,24 +34,20 @@ public interface AngestelltenRepo
      */
     List<AngestelltePersonNode> findAllByOrderByNachnameAscVornameAsc();
 
-    
+
     /**
-     * Findet alle direkten und indirekten Vorgesetzten für eine gegebene Person anhand ihrer ID.
-     * Die Methode durchläuft die Hierarchie der "IST_UNTERSTELLT"-Beziehungen.
-     *
-     * @param id Die ID der {@code AngestelltePersonNode}, für die die Vorgesetzten gefunden werden sollen.
+     * Methode mit Cypher-Query, um alle Vorgesetzten einer angestellten Person
+     * bis zum Wurzelknoten (Root) zu finden.
      * 
-     * @return Eine Liste aller direkten und indirekten {@code AngestelltePersonNode}-Objekte,
-     *         die Vorgesetzte der Person mit der gegebenen ID sind. Gibt eine leere Liste zurück,
-     *         wenn keine Vorgesetzten gefunden werden oder die Person nicht existiert.
+     * @param id ID der angestellten Person, deren Vorgesetzte gesucht werden
+     * 
+     * @return Liste der "Vorgesetztenkette"
      */
     @Query("""
-            MATCH path = (person:AngestelltePerson)-[:IST_UNTERSTELLT*]->(supervisor:AngestelltePerson)
-            WHERE person.id = $id
-            RETURN nodes(path) AS supervisorChain
-            ORDER BY length(path) DESC
-            LIMIT 1
-        """)
-    List<AngestelltePersonNode> getVorgesetztenKette( Long id );
+        MATCH path = (p:AngestelltePerson)-[:IST_UNTERSTELLT*1..]->(v:AngestelltePerson)
+        WHERE ID(p) = $id AND NOT (v)-[:IST_UNTERSTELLT]->()
+        RETURN nodes(path) AS nodes
+    """)
+    List<AngestelltePersonNode> findSuperiorsUpToRoot( @Param("id") Long id );
 
 }
