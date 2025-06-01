@@ -30,6 +30,18 @@
             </a>            
         </p>
     </div>
+    <br>
+
+    <p>
+        <span class="fett">Vorgesetzte:</span>
+        &nbsp;
+        <span th:each="vorgesetzter : ${listeDerVorgesetzten}">
+            <a th:href="@{/app/person/{id}(id=${vorgesetzter.id})}">
+                <span th:text="${vorgesetzter.getVollerName()}"></span>
+            </a>
+            &nbsp;
+        </span>    
+    </p>
     
 </body>
 </html>
