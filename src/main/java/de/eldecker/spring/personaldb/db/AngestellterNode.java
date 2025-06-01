@@ -3,11 +3,7 @@ package de.eldecker.spring.personaldb.db;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
-
-import java.util.HashSet;
-import java.util.Set;
 
 
 
@@ -66,12 +62,6 @@ public class AngestellterNode {
         
         this.nachname = nachname; 
     }
-
-    
-    public String getVollerName() {
-        
-        return vorname + " " + nachname;
-    }
     
     
     public void setVorgesetzter( AngestellterNode vorgesetzter ) {
@@ -85,6 +75,12 @@ public class AngestellterNode {
         return this.vorgesetzter;
     }
 
+    
+    public String getVollerName() {
+        
+        return vorname + " " + nachname;
+    }
+    
     
     @Override
     public String toString() {

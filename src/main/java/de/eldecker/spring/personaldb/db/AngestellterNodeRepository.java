@@ -8,5 +8,5 @@ public interface AngestellterNodeRepository
                  extends Neo4jRepository<AngestellterNode, Long> {
 
     @Query("MATCH ()-[r:IST_UNTERSTELLT]->() RETURN count(r)")
-    long countIstUnterstelltRelationships();
+    long zaehleIstUnterstelltRelationships();
 }

@@ -64,7 +64,7 @@ public class DemoDatenImporter implements ApplicationRunner {
         LOG.info( "Anzahl Angestellte in Datenbank nach Import Demo-Daten: {}", 
                   anzahlAngestellteNachher );
         
-        final long anzahlIstUnterstelltBeziehungen = _angestellterRepo.countIstUnterstelltRelationships();
+        final long anzahlIstUnterstelltBeziehungen = _angestellterRepo.zaehleIstUnterstelltRelationships();
         LOG.info( "Anzahl Beziehungen >ist unterstellt< in Datenbank nach Import Demo-Daten: {}", 
                   anzahlIstUnterstelltBeziehungen );        
     }
