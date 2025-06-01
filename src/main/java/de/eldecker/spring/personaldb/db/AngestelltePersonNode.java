@@ -6,28 +6,37 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 
+/**
+ * Klasse für Knoten (Node), um eine in der Firma angestellte Person zu repräsentieren.
+ */
+@Node("AngestelltePerson")
+public class AngestelltePersonNode {
 
-@Node("Angestellter")
-public class AngestellterNode {
-
+    /** Primärschlüssel */
     @Id @GeneratedValue
     private Long id;
 
+    /** Vorname der angestellten Person. */
     private String vorname;
     
+    /** Nachname (Familienname) der angestellten Person. */
     private String nachname;
 
+    /** Referenz zum direkten Vorgesetzten. */
     @Relationship(type = "IST_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
-    private AngestellterNode vorgesetzter = null;
+    private AngestelltePersonNode vorgesetzter = null;
 
     /*
     @Relationship(type = "WAR_MAL_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
     private Set<AngestellterNode> unterstelltEhemalig = new HashSet<>();
     */
 
-    public AngestellterNode() {}
+    /**
+     * Default-Konstruktor.
+     */
+    public AngestelltePersonNode() {}
 
-    public AngestellterNode( String vorname, String nachname ) {
+    public AngestelltePersonNode( String vorname, String nachname ) {
         
         this.vorname  = vorname;
         this.nachname = nachname;
@@ -64,13 +73,13 @@ public class AngestellterNode {
     }
     
     
-    public void setVorgesetzter( AngestellterNode vorgesetzter ) {
+    public void setVorgesetzter( AngestelltePersonNode vorgesetzter ) {
         
         this.vorgesetzter = vorgesetzter;
     }
     
 
-    public AngestellterNode getVorgesetzter() {
+    public AngestelltePersonNode getVorgesetzter() {
         
         return this.vorgesetzter;
     }

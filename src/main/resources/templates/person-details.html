@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="'Details zu ' + ${person.getVollerName()}"></title>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/personalhierarchie-style.css">
+</head>
+<body>
+
+    <h1>
+        Details: 
+        <span th:text="${person.getVollerName()}"></span>
+    </h1>
+
+    <p>
+        <span class="fett">Vorname: </span>
+        <span th:text="${person.getVorname()}"></span><br>
+    </p>
+    <p>
+        <span class="fett">Nachname: </span>
+        <span th:text="${person.getNachname()}"></span><br>
+    </p>    
+    
+</body>
+</html>

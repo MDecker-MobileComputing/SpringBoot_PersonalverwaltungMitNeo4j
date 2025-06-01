@@ -4,8 +4,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import de.eldecker.spring.personaldb.db.AngestellterNode;
-import de.eldecker.spring.personaldb.db.AngestellterNodeRepository;
+import de.eldecker.spring.personaldb.db.AngestelltePersonNode;
+import de.eldecker.spring.personaldb.db.AngestelltenRepo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +20,14 @@ public class DemoDatenImporter implements ApplicationRunner {
 
     private final static Logger LOG = LoggerFactory.getLogger( DemoDatenImporter.class );
     
-    private AngestellterNodeRepository _angestellterRepo;
+    /** Bean für Zugriff auf Knoten=Datensätzen mit angestellten Personen. */
+    private AngestelltenRepo _angestellterRepo;
     
     
     /**
      * Konstruktor für <i>Dependency Injection</i>
      */
-    public DemoDatenImporter( AngestellterNodeRepository angestellterRepo ) {
+    public DemoDatenImporter( AngestelltenRepo angestellterRepo ) {
         
         _angestellterRepo = angestellterRepo;
     }
@@ -40,25 +41,31 @@ public class DemoDatenImporter implements ApplicationRunner {
     public void run( ApplicationArguments args ) throws Exception {
     
         final long anzahlAngestellteVorher = _angestellterRepo.count();
-        LOG.info( "Anzahl Angestellte in Datenbank: {}", anzahlAngestellteVorher );
         
         if ( anzahlAngestellteVorher > 0) {
          
-            LOG.info( "Datenbank ist nicht leer, importiere keine Demo-Daten." );
+            LOG.info( "Datenbank enthält schon {} Personen, es werden keine Demo-Daten importiert." );
             return;
         }
            
         LOG.info( "Datenbank ist leer, importiere Demo-Daten..." );
 
         
-        AngestellterNode gruender = erzeugeAngestellter( "Gerda", "Gründer", null, null );
+        AngestelltePersonNode gruender = erzeugeAngestellter( "Gerda", "Gründer", null, null );
         
-        AngestellterNode manager1 = erzeugeAngestellter( "Manfred", "Meier", gruender, null );
-        AngestellterNode manager2 = erzeugeAngestellter( "Melanie", "Meyer", gruender, null );
+        AngestelltePersonNode manager1 = erzeugeAngestellter( "Manfred", "Meier", gruender, null );
+        AngestelltePersonNode manager2 = erzeugeAngestellter( "Melanie", "Meyer", gruender, null );
                         
-        AngestellterNode ma1 = erzeugeAngestellter( "Alred" , "Armbruster", manager1, null );
-        AngestellterNode ma2 = erzeugeAngestellter( "Bob"   , "Brecht"    , manager1, null );
-        AngestellterNode ma3 = erzeugeAngestellter( "Claire", "Cramer"    , manager1, null );
+        erzeugeAngestellter( "Alfred" , "Armbruster", manager1, null );
+        erzeugeAngestellter( "Bob"    , "Brecht"    , manager1, null );
+        erzeugeAngestellter( "Claire" , "Cramer"    , manager1, null );
+        
+        erzeugeAngestellter( "Dave" , "Dolllinger"  , manager2, null );
+        
+        AngestelltePersonNode edwin = erzeugeAngestellter( "Edwin", "Eger", manager2, null );
+        
+        erzeugeAngestellter( "Peter", "Praktikant", edwin, null );
+                
         
         final long anzahlAngestellteNachher = _angestellterRepo.count();
         LOG.info( "Anzahl Angestellte in Datenbank nach Import Demo-Daten: {}", 
@@ -71,7 +78,7 @@ public class DemoDatenImporter implements ApplicationRunner {
     
     
     /**
-     * Neuen Angestellten erzeugen und in Datenbank speichern.
+     * Neue angestellte Person erzeugen und in Datenbank speichern.
      * 
      * @param vorname Vorname Angestellter
      * 
@@ -83,23 +90,16 @@ public class DemoDatenImporter implements ApplicationRunner {
      * 
      * @return Neu erzeugtes Objekt
      */
-    private AngestellterNode erzeugeAngestellter( String vorname, String nachname, 
-                                                  AngestellterNode vorgesetzterAktuell,
-                                                  AngestellterNode vorgesetzterEhemals ) {
+    private AngestelltePersonNode erzeugeAngestellter( String vorname, String nachname, 
+                                                       AngestelltePersonNode vorgesetzterAktuell,
+                                                       AngestelltePersonNode vorgesetzterEhemals ) {
         
-        AngestellterNode angesteller = new AngestellterNode( vorname, nachname );
+        AngestelltePersonNode angesteller = new AngestelltePersonNode( vorname, nachname );
         
         if ( vorgesetzterAktuell != null ) {
             
             angesteller.setVorgesetzter( vorgesetzterAktuell );
         }
-        
-        /*
-        if ( vorgesetzterEhemals != null ) {
-            
-            angesteller.addEhemaligUnterstellt( vorgesetzterEhemals );
-        }
-        */
         
         return _angestellterRepo.save( angesteller );
     }

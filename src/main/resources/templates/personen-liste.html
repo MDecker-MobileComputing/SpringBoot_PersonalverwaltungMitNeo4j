@@ -10,13 +10,13 @@
 
     <h1>
         Liste der Angestellten
-        ( <span th:text="${mitarbeiterListe.size()}"></span> )
+        ( <span th:text="${personenListe.size()}"></span> )
     </h1>
 
     <ul>
-        <li th:each="mitarbeiter : ${mitarbeiterListe}"><!-- über alle Einträge iterieren -->
-            <a th:href="@{/app/mitarbeiter/{id}(id=${mitarbeiter.id})}">
-                <span th:text="${mitarbeiter.getVollerName()}"></span>
+        <li th:each="person : ${personenListe}"><!-- über alle Einträge iterieren -->
+            <a th:href="@{/app/person/{id}(id=${person.id})}">
+                <span th:text="${person.getVollerName()}"></span>
             </a>
         </li>
     </ul>
