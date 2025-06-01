@@ -75,13 +75,23 @@ public class AngestellterNode {
         return this.vorgesetzter;
     }
 
-    
+
+    /**
+     * Gibt den vollen Namen des Angestellten zurück, bestehend aus Vorname und Nachname.
+     * 
+     * @return Voller Name des Angestellten
+     */
     public String getVollerName() {
         
         return vorname + " " + nachname;
     }
+
     
-    
+    /**
+     * Gibt vollen Namen des Angestellten zurück inkl. Vorgesetzter (falls vorhanden).
+     * 
+     * @return String-Darstellung des Angestellten
+     */
     @Override
     public String toString() {
         
@@ -91,13 +101,14 @@ public class AngestellterNode {
         
         if ( vorgesetzter != null ) {
             
-            sb.append( "Direkter Vorgesetzter ist " ).append( vorgesetzter.getVollerName() );            
+            final String vorgesetzterName = vorgesetzter.getVollerName();
+
+            sb.append( "Direkter Vorgesetzter ist " ).append( vorgesetzterName );
             
         } else {
             
             sb.append( "Niemanden unterstellt" );
         }
-        
         
         return sb.toString();
     }
