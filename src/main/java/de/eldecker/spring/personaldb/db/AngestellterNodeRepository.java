@@ -10,3 +10,4 @@ public interface AngestellterNodeRepository
     @Query("MATCH ()-[r:IST_UNTERSTELLT]->() RETURN count(r)")
     long zaehleIstUnterstelltRelationships();
 }
+ 
