@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Liste der Angestellten</title>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/personalhierarchie-style.css">
+</head>
+<body>
+
+    <h1>
+        Liste der Angestellten
+        ( <span th:text="${mitarbeiterListe.size()}"></span> )
+    </h1>
+
+    <ul>
+        <li th:each="mitarbeiter : ${mitarbeiterListe}"><!-- über alle Einträge iterieren -->
+        <!--<a th:href="@{/app/person/{id}(id=${eintrag.id})}">-->
+            <span th:text="${mitarbeiter.getVollerName()}"></span>
+        <!--</a>-->
+        </li>
+    </ul>
+
+</body>
