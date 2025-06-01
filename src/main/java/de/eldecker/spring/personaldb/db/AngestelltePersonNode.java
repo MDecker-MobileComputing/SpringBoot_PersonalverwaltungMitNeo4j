@@ -23,7 +23,7 @@ public class AngestelltePersonNode {
     private String nachname;
 
     /** Referenz zum direkten Vorgesetzten. */
-    @Relationship(type = "IST_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
+    @Relationship( type = "IST_UNTERSTELLT", direction = Relationship.Direction.OUTGOING )
     private AngestelltePersonNode vorgesetzter = null;
 
     /*
@@ -36,6 +36,14 @@ public class AngestelltePersonNode {
      */
     public AngestelltePersonNode() {}
 
+    
+    /**
+     * Konstruktor, um Vor- und Nachname zu setzen.
+     * 
+     * @param vorname Vorname der angestellten Person
+     * 
+     * @param nachname Familienname der angestellten Person
+     */
     public AngestelltePersonNode( String vorname, String nachname ) {
         
         this.vorname  = vorname;
@@ -121,4 +129,5 @@ public class AngestelltePersonNode {
         
         return sb.toString();
     }
+
 }

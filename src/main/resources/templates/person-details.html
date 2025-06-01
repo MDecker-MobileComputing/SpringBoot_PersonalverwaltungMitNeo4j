@@ -21,6 +21,15 @@
         <span class="fett">Nachname: </span>
         <span th:text="${person.getNachname()}"></span><br>
     </p>    
+
+    <div th:if="${person.getVorgesetzter()} != null">
+        <p>
+            <span class="fett">Direkter Vorgesetzter: </span>
+            <a th:href="@{/app/person/{id}(id=${person.getVorgesetzter().getId()})}">
+                <span th:text="${person.getVorgesetzter().getVollerName()}"></span>
+            </a>            
+        </p>
+    </div>
     
 </body>
 </html>
