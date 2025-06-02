@@ -87,7 +87,8 @@ public class ThymeleafController {
         LOG.warn( "Details abgerufen fuer: {}", personOptional.get() );         
         model.addAttribute( "person", personOptional.get() );
         
-        final List<AngestelltePersonNode> listeDerVorgesetzten = _angestellterNodeRepository.findSuperiorsUpToRoot( id );
+        final List<AngestelltePersonNode> listeDerVorgesetzten = 
+        				_angestellterNodeRepository.findSuperiorsUpToRoot( id );
         model.addAttribute( "listeDerVorgesetzten", listeDerVorgesetzten );
         
         return "person-details";
