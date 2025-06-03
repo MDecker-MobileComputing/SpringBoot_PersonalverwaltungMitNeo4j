@@ -5,7 +5,7 @@ services:
     image: neo4j:latest
     container_name: neo4j_personalhierarchie
     ports:
-      - "7474:7474" # HTTP port for Neo4j browser
-      - "7687:7687" # Bolt port for application connections
+      - "7474:7474" # HTTP-Port für Web-UI "Neo4j Browser"
+      - "7687:7687" # Bolt-Port für Zugriff über Treiber
     environment:
       - NEO4J_AUTH=neo4j/mysecretpassword

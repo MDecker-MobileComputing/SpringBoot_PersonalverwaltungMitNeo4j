@@ -114,7 +114,9 @@ public class AngestelltePersonNode {
         
         StringBuffer sb = new StringBuffer();
         
-        sb.append( vorname  ).append( ' ' ).append( nachname ).append( " hat als direkten Vorgesetzten " );
+        sb.append( vorname  ).append( ' ' )
+          .append( nachname )
+          .append( " hat als direkten Vorgesetzten " );
         
         if ( vorgesetzter != null ) {
             
