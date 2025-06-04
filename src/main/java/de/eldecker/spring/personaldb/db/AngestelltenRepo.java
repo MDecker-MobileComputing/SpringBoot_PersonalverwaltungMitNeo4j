@@ -42,8 +42,8 @@ public interface AngestelltenRepo
      * @param id ID der angestellten Person, deren Vorgesetzte gesucht werden
      * 
      * @return Liste mit "Vorgesetztenkette": erster Eintrag ist direkter Vorgesetzter,
-     *         dann kommt "Chef-Chef"; ganz am Ende steht der oberste Chef (CEO) der
-     *         Firma.
+     *         dann kommt "Chef-Chef"; ganz am Ende steht der oberste Chef (z.B. CEO) 
+     *         der Firma.         
      */
     @Query("""
         MATCH path = (p:AngestelltePerson)-[:IST_UNTERSTELLT*1..]->(v:AngestelltePerson)
