@@ -41,13 +41,15 @@ public interface AngestelltenRepo
      * 
      * @param id ID der angestellten Person, deren Vorgesetzte gesucht werden
      * 
-     * @return Liste der "Vorgesetztenkette"
+     * @return Liste mit "Vorgesetztenkette": erster Eintrag ist direkter Vorgesetzter,
+     *         dann kommt "Chef-Chef"; ganz am Ende steht der oberste Chef (CEO) der
+     *         Firma.
      */
     @Query("""
         MATCH path = (p:AngestelltePerson)-[:IST_UNTERSTELLT*1..]->(v:AngestelltePerson)
         WHERE ID(p) = $id AND NOT (v)-[:IST_UNTERSTELLT]->()
         RETURN nodes(path) AS nodes
     """)
-    List<AngestelltePersonNode> findSuperiorsUpToRoot( @Param("id") Long id );
+    List<AngestelltePersonNode> getVorgesetztenkette( @Param("id") Long id );
 
 }
