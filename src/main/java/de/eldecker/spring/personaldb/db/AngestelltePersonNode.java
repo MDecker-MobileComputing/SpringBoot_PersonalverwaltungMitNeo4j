@@ -28,7 +28,7 @@ public class AngestelltePersonNode {
 
     /*
     @Relationship(type = "WAR_MAL_UNTERSTELLT", direction = Relationship.Direction.OUTGOING)
-    private Set<AngestellterNode> unterstelltEhemalig = new HashSet<>();
+    private Set<AngestelltePersonNode> unterstelltEhemalig = new HashSet<>();
     */
 
     /**
